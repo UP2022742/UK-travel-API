@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>The Portfolio</title>
+        <link rel="stylesheet" href="/static/css/main.css"/>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900&display=swap" rel="stylesheet"> 
+    </head>
+
+    <body data-barba="wrapper">
+        <div class="load-container">
+            <div class="loading-screen"></div>
+        </div>
+
+        <main data-barba="container" data-barba-namespace="about-section">
+            <div class="header">
+                <h1 style="display: inline;" class="about-message">About</h1>
+                <h1 style="display: inline;" class="about-me">Me</h1>
+                <!-- <div class="animate-this button">
+                    <a href="index.html">go back to home</a>
+                </div> -->
+            </div>
+            <style>
+                .player-thumb{
+                    width: 15vw;
+                    height: 15vw;
+                    display: inline-block;
+                    border-radius: 50%;
+                    background-image: url(images/profile.jpg);
+                    background-size: cover;
+                    background-position: center;
+                    transform: translate(0px, -7.5vw);
+                    border: 5px solid white;
+                }
+                .header {
+                    height: 150px;
+                    background-color: rgb(0, 17, 34);
+                    border-bottom: 5px solid white;
+                    font-family: 'Kanit', sans-serif;
+                    text-align: center;
+                    font-size: 1.5vw;
+                    letter-spacing: 0.5vw;
+                    color: rgba(255,255,255,.5);
+                    text-indent: 1.5vw;
+                    opacity: 1;
+                    font-weight: 100;
+                    /* text-shadow: 0 0 15px #7198a0; */
+                    display: flex;
+                    align-items: flex-end;
+                    justify-content: center;
+                }
+
+                .about-message {
+                    margin: 0;
+                }
+                .about-me {
+                    margin: 0;
+                }
+
+                .mid-content {
+                    position: absolute;
+                    width: 90%;
+                    left: 5%;
+                }
+
+                .about-top {
+                    margin-top: 10vw;
+                }
+
+                .basic-flex{
+                    margin: auto;
+                }
+                
+                .float-left {
+                    width: 50%;
+                    float: left;
+                }
+                .main-content {
+                    margin: 50px;
+                    font-family: 'Noto Sans JP', sans-serif;
+                }
+
+                .work, .education {
+                    font-size: 30px;
+                }
+                .work-role, .education-title {
+                    font-size: 25px;
+                }
+                .work-title {
+                    font-size: 20px;
+                }
+                .content-paragraph {
+                    font-size: 18px;
+                    margin-bottom: 50px;
+                }
+
+                .fCups1 { display: flex; }
+                .fCups2 { display: flex; }
+
+                .fixedCenter, .languageName, .languagePercent {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-around; 
+                }
+
+                .languageName, .languagePercent { text-align: center; }
+                .languageName { font-size: 2vw; }
+                .languagePercent { font-size: 3vw; }
+
+                .cupOne, .cupTwo, .cupThree, .cupFour {
+                    margin: 15px;
+                    width: 13vw;
+                    height: 13vw;
+                    border: 6px solid #262626;
+                    border-radius: 30px;
+                    background-color: #626f8f;
+                    box-shadow: 0 0 0 6px #fff;
+                }
+
+                .cupOne, .cupTwo, .cupThree, .cupFour {
+                    background-image: url("images/water.gif");
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                }
+
+                .cupOne {
+                    background-position: 0 0;
+                }
+                .cupTwo {
+                    background-position: 0 50px;
+                }
+                .cupThree {
+                    background-position: 0 120px;
+                }
+                .cupFour {
+                    background-position: 0 300px;
+                }
+
+
+                @media screen and (max-width: 1200px) {
+                    .mid-content {
+                        position: absolute;
+                        text-align: center;
+                        width: 100%;
+                        left: 0%;
+                    }
+                    .player-thumb {
+                        width: 30vw;
+                        height: 30vw;
+                        transform: translate(0px, -15vw);
+                    }
+                    .header {
+                        font-size: 3vw;
+                        height: 150px;
+                    }
+                    .about-message {
+                        position: absolute;
+                        left: 10%;
+                        margin: 0;
+                    }
+                    .about-me {
+                        position: absolute;
+                        right: 22%;
+                        margin: 0;
+                    }
+                    .float-left {
+                        width: 100%;
+                    }
+                    .main-content {
+                        margin: 30px ;
+                    }
+                    .work, .education {
+                        font-size: 60px;
+                    }
+                    .work-role, .education-title {
+                        font-size: 50px;
+                        text-align: center;
+                    }
+                    .work-title {
+                        font-size: 40px;
+                        text-align: center;
+                    }
+                    .content-paragraph {
+                        font-size: 32px;
+                    }
+                    .about-top {
+                        margin-top: 25vw;
+                    }
+                    .fixedCenter { 
+                        width: 100%; 
+                    }
+                }
+
+            </style>
+            <div class="mid-content">
+                <div class="player-thumb"></div>
+            </div>
+            <div class="main-content">
+                <div class="animate-this about-top">
+                    <div class="work">Matthew Robinson</div>
+                    <hr style="margin-bottom: 50px">
+                    <div class="work-title">Development Security Operations (DevSecOps) engineer at UK Ministry of Defence</div>
+                    <br>
+                    <div class="content-paragraph">An enquiring mind and I like to know how and why things work. I chose at college to focus my studies in software engineering. 
+
+                        Passionate software engineer with a tenacity to improve the efficiency and effectiveness of a system. Confident communication, and innovative creator to develop software that is customized to meet a company’s organizational needs, highlight their core competencies, and further their success. 
+                        
+                        I have trained in both software security and development in college and a software house while working for the government. I enjoy the rapid response and development of the agile methodology.
+                    </div>
+                </div>
+                <div class="animate-this">
+                    <div class="work">Language Knowledge</div>
+                    <hr style="margin-bottom: 50px">
+                    <div class="fixedCenter">
+                        <div id="cupOne" class="cupOne">
+                            <h1 class="languageName">Python</h1>
+                            <h1 class="languagePercent">90%</h1>
+                        </div>
+                        <div id="cupTwo" class="cupTwo">
+                            <h1 class="languageName">C++</h1>
+                            <h1 class="languagePercent">85%</h1>
+                        </div>
+                        <div id="cupThree" class="cupThree">
+                            <h1 class="languageName">Java</h1>
+                            <h1 class="languagePercent">60%</h1>
+                        </div>
+                        <div id="cupFour" class="cupFour">
+                            <h1 class="languageName">Rust</h1>
+                            <h1 class="languagePercent">10%</h1>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="basic-flex">
+                    <div style="margin-right: 20px;" class="animate-this float-left">
+                        <div class="work">Work</div>
+                        <hr style="margin-bottom: 50px">
+                        <div class="work-role">Software Engineer</div>
+                        <div class="work-title">Ministry Of Defence | Full Time</div>
+                        <div class="content-paragraph">
+                            I am a Development Security Operations member for the Ministry of Defence. This requires a broad range of knowledge and an "out of the box" style of thinking. The majority of our software development cycles are based around the Agile Scrum methodology with consideration of security in order to produce robust software.
+                        </div>
+                        <div class="work-role">Software Engineer</div>
+                        <div class="work-title">CORE Lighting Limited | Full Time</div>
+                        <div class="content-paragraph">
+                            During my time at Core Lighting LTD I was repsonsible for a number of roles including but not limited to; Customer Assistant, Personal Assistant and Designer. I was required to talk to customers on the phone and help them with queries as well data manipulation on excel for presentation use. On top of that, I had a task to code a lighting sequence and design a radio frequency based remote to activate it to be used for a plane landing in Antarctica. In regards to the software I was required to learn, it was called Easy Stand Alone 2 and it connected all the lights together so that the lighting sequence could communicate in uniform.
+                        </div>
+                    </div>
+                    <div style="margin-right: 20px;" class="animate-this">
+                        <div class="education">Education</div>
+                        <hr style="margin-bottom: 50px">
+                        <div class="education-title">Berkeley</div>
+                        <div class="content-paragraph">Computer Science (72%), Cambridge Technical I.T Diploma (Distinction)</div>
+                        <div class="education-title">Deer Park</div>
+                        <div class="content-paragraph">
+                            Computer Science (Grade A) Grades A-C including English, Mathematics & Statistics. Physics (Grade B) Biology (Grade B) Chemistry (Grade B) History (Grade C)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="https://unpkg.com/@barba/core"></script>
+    <script
+        type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.4/gsap.min.js"
+    ></script>
+    <script src="/static/js/page_transition.js"></script>
+</html>

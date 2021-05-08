@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <title>Travels</title>
+        <link rel="stylesheet" href="/static/css/main.css"/>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.71/jquery.csv-0.71.min.js"></script>
+        <script type="text/javascript">
+        google.charts.load('current', {
+            'packages':['geochart'],
+            'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+        });
+        google.charts.setOnLoadCallback(drawRegionsMap);
+
+        function drawRegionsMap() {
+            var array = [['Country', 'Level']]
+            try {               
+                {{range .RedListCountries}}
+                    array.push(['{{.}}',1]);
+                {{end}}
+                {{range .AmberListCountries}}
+                    array.push(['{{.}}',2]);
+                {{end}}
+                {{range .GreenListCountries}}
+                    array.push(['{{.}}',3]);
+                {{end}}
+            } catch (error) {
+                console.log(error);
+            }
+            
+
+            var data = google.visualization.arrayToDataTable(array);
+            var options = {
+                colorAxis: {values: [1, 2, 3], colors: ['#FF6961', '#FFB54C', '#7ABD7E'],},
+                backgroundColor: '#000b16',
+                datalessRegionColor: '#999999',
+                defaultColor: '#f5f5f5',
+                legend: 'none',
+            };
+
+            var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+            chart.draw(data, options);
+        }
+        </script>
+    </head>
+    <body>
+        <div id="regions_div" style="text-align:center; width: 100vw; height: 100vh;"></div>
+    </body>
+</html>
