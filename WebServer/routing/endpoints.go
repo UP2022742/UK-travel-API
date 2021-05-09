@@ -8,56 +8,58 @@ import (
 	"text/template"
 )
 
-func GetGreenList() []string {
+func GetGreenList() ([]string, error) {
 	resp, err := http.Get("http://localhost:8080/green")
 	if err != nil {
-		fmt.Println(err.Error())
+		return nil, err
 	}
 
-	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Println(err.Error())
+		return nil, err
+	}
+
+	err = resp.Body.Close()
+	if err != nil {
+		return nil, err
 	}
 
 	var post []string
 	err = json.Unmarshal(body, &post)
 	if err != nil {
-		fmt.Println(err.Error())
+		return nil, err
 	}
-
-	fmt.Println(post)
-	return post
+	return post, nil
 }
-func GetAmberList() []string {
+func GetAmberList() ([]string, error) {
 	resp, err := http.Get("http://localhost:8080/amber")
 	if err != nil {
-		fmt.Println(err.Error())
+		return nil, err
 	}
 
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Println(err.Error())
+		return nil, err
 	}
 
 	var post []string
 	err = json.Unmarshal(body, &post)
 	if err != nil {
-		fmt.Println(err.Error())
+		return nil, err
 	}
-	return post
+	return post, nil
 }
-func GetRedList() []string {
+func GetRedList() ([]string, error) {
 	resp, err := http.Get("http://localhost:8080/red")
 	if err != nil {
-		fmt.Println(err.Error())
+		return nil, err
 	}
 
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Println(err.Error())
+		return nil, err
 	}
 
 	var post []string
@@ -65,7 +67,7 @@ func GetRedList() []string {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	return post
+	return post, nil
 }
 
 // HomePage contains the index.
@@ -136,11 +138,25 @@ func (route *Router) TravelPage(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		route.logger.Error(err.Error())
 	}
+
+	greenList, err := GetGreenList()
+	if err != nil {
+		fmt.Println("Couldn't get greenlist")
+	}
+	amberList, err := GetAmberList()
+	if err != nil {
+		fmt.Println("Couldn't get amberlist.")
+	}
+	redList, err := GetRedList()
+	if err != nil {
+		fmt.Println("Couldn't get redlist.")
+	}
+
 	templates.ExecuteTemplate(
 		w, "travel.html", MetaTravel{
-			GreenListCountries: GetGreenList(),
-			AmberListCountries: GetAmberList(),
-			RedListCountries:   GetRedList(),
+			GreenListCountries: greenList,
+			AmberListCountries: amberList,
+			RedListCountries:   redList,
 		},
 	)
 	route.logger.Debug("An Travel Request was made.")
