@@ -9,6 +9,5 @@ RUN go build -o /go/bin/server
 
 FROM alpine:3.10 
 COPY --from=GO_BUILD /go/bin/server/ ./
-COPY --from=GO_BUILD /server/certs ./certs
 EXPOSE 8080 
 CMD ./server

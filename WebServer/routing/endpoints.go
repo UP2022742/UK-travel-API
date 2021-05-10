@@ -8,7 +8,7 @@ import (
 )
 
 func GetGreenList() ([]string, error) {
-	resp, err := http.Get("hhttps://mcrrobinson.ml:8080/green")
+	resp, err := http.Get("http://api:8080/green")
 	if err != nil {
 		return nil, err
 	}
@@ -31,7 +31,7 @@ func GetGreenList() ([]string, error) {
 	return post, nil
 }
 func GetAmberList() ([]string, error) {
-	resp, err := http.Get("https://mcrrobinson.ml:8080/amber")
+	resp, err := http.Get("http://api:8080/amber")
 	if err != nil {
 		return nil, err
 	}
@@ -54,7 +54,7 @@ func GetAmberList() ([]string, error) {
 	return post, nil
 }
 func GetRedList() ([]string, error) {
-	resp, err := http.Get("hhttps://mcrrobinson.ml:8080/red")
+	resp, err := http.Get("http://api:8080/red")
 	if err != nil {
 		return nil, err
 	}
