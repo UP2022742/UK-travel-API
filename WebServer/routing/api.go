@@ -17,7 +17,7 @@ func (route *Router) CreateWebServer() {
 	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./static/"))))
 	r.HandleFunc("/", route.HomePage).Methods("GET")
 	r.HandleFunc("/about", route.AboutPage).Methods("GET")
-	r.HandleFunc("/projects", route.ProjectsPage).Methods("GET")
+	r.HandleFunc("/project", route.ProjectsPage).Methods("GET")
 	r.HandleFunc("/social", route.SocialPage).Methods("GET")
 	r.HandleFunc("/travel", route.TravelPage).Methods("GET")
 
