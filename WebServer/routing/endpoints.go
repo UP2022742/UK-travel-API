@@ -2,6 +2,7 @@ package routing
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"text/template"
@@ -10,22 +11,26 @@ import (
 func GetGreenList() ([]string, error) {
 	resp, err := http.Get("http://api:8080/green")
 	if err != nil {
+		fmt.Println("Line 14")
 		return nil, err
 	}
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
+		fmt.Println("Line 20")
 		return nil, err
 	}
 
 	err = resp.Body.Close()
 	if err != nil {
+		fmt.Println("Line 26")
 		return nil, err
 	}
 
 	var post []string
 	err = json.Unmarshal(body, &post)
 	if err != nil {
+		fmt.Println("Line 33")
 		return nil, err
 	}
 	return post, nil
