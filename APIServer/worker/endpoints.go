@@ -96,5 +96,5 @@ func (route *Worker) AmberList(w http.ResponseWriter, r *http.Request) {
 }
 
 func (route *Worker) RedList(w http.ResponseWriter, r *http.Request) {
-	route.SendJson(w, r, "#red-list-of-countries-and-territories", "Amber")
+	route.SendJson(w, r, "#red-list-of-countries-and-territories", "Red")
 }
