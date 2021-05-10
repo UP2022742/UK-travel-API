@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/tls"
 	"fmt"
+	"log"
 	"net/http"
 	"time"
 
@@ -34,6 +35,10 @@ func (route *Router) CreateWebServer() {
 	}
 }
 
+func redirectTLS(w http.ResponseWriter, r *http.Request) {
+	http.Redirect(w, r, "https://mcrrobinson.ml:443"+r.RequestURI, http.StatusMovedPermanently)
+}
+
 // ListenWebServer starts the API server on a new thread as ListenAndServe blocks.
 func (route *Router) ListenWebServer(stop chan bool) {
 	route.logger.Info(
@@ -42,10 +47,19 @@ func (route *Router) ListenWebServer(stop chan bool) {
 	)
 
 	go func() {
-		err := route.apiServer.ListenAndServeTLS("", "")
+
+		// Shouldn't need to justify the certificate and key again but it has
+		// problems. Look into this later.
+		err := route.apiServer.ListenAndServeTLS(route.certFile, route.keyFile)
 		if err != nil {
 			route.logger.Crit(err.Error())
 			stop <- true
+		}
+	}()
+
+	go func() {
+		if err := http.ListenAndServe(":80", http.HandlerFunc(redirectTLS)); err != nil {
+			log.Fatalf("ListenAndServe error: %v", err)
 		}
 	}()
 }
