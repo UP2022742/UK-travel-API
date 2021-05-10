@@ -75,15 +75,12 @@ func (route *Worker) SendJson(w http.ResponseWriter, r *http.Request, id string,
 		w.WriteHeader(http.StatusInternalServerError)
 	}
 
-	route.logger.Debug("Before marshal", "payload", countries)
-
 	payload, err := json.Marshal(countries)
 	if err != nil {
 		route.logger.Debug(err.Error())
 		w.WriteHeader(http.StatusInternalServerError)
 	}
 
-	route.logger.Debug("After Marshal", "payload", payload)
 	route.logger.Debug("A '" + pageRequest + "' request was made.")
 
 	w.Header().Set("Content-Type", "application/json")
