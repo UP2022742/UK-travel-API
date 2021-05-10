@@ -71,15 +71,19 @@ func ReturnCountries(id string) ([]string, error) {
 func (route *Worker) SendJson(w http.ResponseWriter, r *http.Request, id string, pageRequest string) {
 	countries, err := ReturnCountries(id)
 	if err != nil {
-		route.logger.Debug(err.Error())
+		route.logger.Error(err)
 		w.WriteHeader(http.StatusInternalServerError)
 	}
+
+	route.logger.Debug("Before marshal", "payload", countries)
 
 	payload, err := json.Marshal(countries)
 	if err != nil {
 		route.logger.Debug(err.Error())
 		w.WriteHeader(http.StatusInternalServerError)
 	}
+
+	route.logger.Debug("After Marshal", "payload", payload)
 
 	route.logger.Debug("A '" + pageRequest + "' request was made.")
 
