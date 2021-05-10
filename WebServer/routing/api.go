@@ -21,10 +21,6 @@ func (route *Router) CreateWebServer() {
 	r.HandleFunc("/social", route.SocialPage).Methods("GET")
 	r.HandleFunc("/travel", route.TravelPage).Methods("GET")
 
-	// route.apiServer = &http.Server{
-	// 	Addr:    fmt.Sprintf(":%d", route.webPort),
-	// 	Handler: handlers.CORS()(r),
-	// }
 	route.apiServer = &http.Server{
 		Addr:    fmt.Sprintf(":%d", route.webPort),
 		Handler: handlers.CORS()(r),

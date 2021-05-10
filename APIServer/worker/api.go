@@ -2,6 +2,7 @@ package worker
 
 import (
 	"context"
+	"crypto/tls"
 	"fmt"
 	"net/http"
 	"time"
@@ -19,6 +20,9 @@ func (route *Worker) CreateAPIServer() {
 	route.apiServer = &http.Server{
 		Addr:    fmt.Sprintf(":%d", route.apiPort),
 		Handler: handlers.CORS()(r),
+		TLSConfig: &tls.Config{
+			Certificates: []tls.Certificate{route.cert},
+		},
 	}
 }
 
@@ -29,7 +33,10 @@ func (route *Worker) ListenAPIServer(stop chan bool) {
 	)
 
 	go func() {
-		err := route.apiServer.ListenAndServe()
+
+		// Shouldn't need to justify the certificate and key again but it has
+		// problems. Look into this later.
+		err := route.apiServer.ListenAndServeTLS(route.certFile, route.keyFile)
 		if err != nil {
 			route.logger.Crit(err.Error())
 			stop <- true
