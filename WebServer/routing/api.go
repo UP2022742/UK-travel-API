@@ -2,6 +2,7 @@ package routing
 
 import (
 	"context"
+	"crypto/tls"
 	"fmt"
 	"net/http"
 	"time"
@@ -20,9 +21,16 @@ func (route *Router) CreateWebServer() {
 	r.HandleFunc("/social", route.SocialPage).Methods("GET")
 	r.HandleFunc("/travel", route.TravelPage).Methods("GET")
 
+	// route.apiServer = &http.Server{
+	// 	Addr:    fmt.Sprintf(":%d", route.webPort),
+	// 	Handler: handlers.CORS()(r),
+	// }
 	route.apiServer = &http.Server{
 		Addr:    fmt.Sprintf(":%d", route.webPort),
 		Handler: handlers.CORS()(r),
+		TLSConfig: &tls.Config{
+			Certificates: []tls.Certificate{route.cert},
+		},
 	}
 }
 
@@ -34,7 +42,7 @@ func (route *Router) ListenWebServer(stop chan bool) {
 	)
 
 	go func() {
-		err := route.apiServer.ListenAndServe()
+		err := route.apiServer.ListenAndServeTLS("", "")
 		if err != nil {
 			route.logger.Crit(err.Error())
 			stop <- true

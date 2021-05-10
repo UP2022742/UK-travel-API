@@ -1,0 +1,20 @@
+version: '3'
+services:
+   api:
+      image: api
+      build: ./APIServer
+      container_name: api
+      restart: always
+      ports:
+         - "8080:8080"
+   web:
+      image: web
+      build: ./WebServer
+      depends_on:
+         - api
+      container_name: web
+      restart: always
+      links:
+      - api
+      ports:
+         - "443:443"

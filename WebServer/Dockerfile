@@ -1,9 +1,15 @@
-FROM golang:1.16.4
+FROM golang:1.15-alpine AS GO_BUILD
+WORKDIR /server
+COPY . /server
 
-WORKDIR /
+RUN go get -d github.com/gorilla/mux
+RUN go get -d github.com/inconshreveable/log15
+RUN go build -o /go/bin/server
 
-COPY . .
-RUN go get -d github.com/gorilla/mux && \
-    go get -d github.com/inconshreveable/log15
-
-CMD ["./main.exe"]
+FROM alpine:3.10 
+COPY --from=GO_BUILD /go/bin/server/ ./
+COPY --from=GO_BUILD /server/templates/ ./templates
+COPY --from=GO_BUILD /server/static ./static
+COPY --from=GO_BUILD /server/certs ./certs
+EXPOSE 443
+CMD ./server
