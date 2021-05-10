@@ -36,7 +36,7 @@ func (route *Worker) ListenAPIServer(stop chan bool) {
 
 		// Shouldn't need to justify the certificate and key again but it has
 		// problems. Look into this later.
-		err := route.apiServer.ListenAndServeTLS("", "")
+		err := route.apiServer.ListenAndServeTLS(route.certFile, route.keyFile)
 		if err != nil {
 			route.logger.Crit(err.Error())
 			stop <- true

@@ -17,6 +17,8 @@ type Router struct {
 	webIP        string
 	apiPort      int
 	apiIP        string
+	certFile     string
+	keyFile      string
 	cert         tls.Certificate
 }
 
@@ -31,6 +33,8 @@ func NewRouterStructure(title string, webPort int, webIP string, apiPort int, ap
 		webIP:        webIP,
 		apiPort:      apiPort,
 		apiIP:        apiIP,
+		certFile:     certFile,
+		keyFile:      keyFile,
 		cert:         cert,
 	}
 	route.logger.SetHandler(log.StreamHandler(os.Stderr, log.TerminalFormat()))
