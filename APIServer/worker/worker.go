@@ -14,20 +14,18 @@ type Worker struct {
 	apiServer *http.Server
 	apiPort   int
 	apiIP     string
-	certFile  string
-	keyFile   string
 	cert      tls.Certificate
 }
 
 // NewWorkerStructure Defines an instance of the worker structure.
 func NewWorkerStructure(apiPort int, apiIP string, certFile string, keyFile string) *Worker {
+	cert, _ := tls.LoadX509KeyPair("certs/certificate.crt", "certs/private.key")
 	route := &Worker{
 		logger:    log.New("module", "Worker"),
 		apiServer: nil,
 		apiPort:   apiPort,
 		apiIP:     apiIP,
-		certFile:  certFile,
-		keyFile:   keyFile,
+		cert:      cert,
 	}
 	route.logger.SetHandler(log.StreamHandler(os.Stderr, log.TerminalFormat()))
 	return route
