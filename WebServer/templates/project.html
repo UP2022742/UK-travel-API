@@ -16,13 +16,13 @@
                 <h1>Github Projects</h1>
             </div>
             <div class="row"> 
+                <div id="column0" class="animate-this column">
+                </div>
                 <div id="column1" class="animate-this column">
-                </div>
-                <div id="column2" class="animate-this column">
                 </div>  
-                <div id="column3" class="animate-this column">
+                <div id="column2" class="animate-this column">
                 </div>
-                <div id="column4" class="animate-this column">
+                <div id="column3" class="animate-this column">
                 </div>
             </div>
         </main>
@@ -34,5 +34,55 @@
         src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.4/gsap.min.js"
     ></script>
     <script src="/static/js/page_transition.js"></script>
-    <script src="/static/js/draw_boxes.js"></script>
+    <script>
+        function divElement(element, content, className, appendElement){
+            var descDiv = document.createElement(element);
+            descDiv.innerHTML += content;
+            descDiv.className = className;
+            appendElement.appendChild(descDiv);
+        }
+
+        function getRandomBetween(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        function generateBlock(column, title, description, language) {
+            // Create grid box with random size.
+            var baseDiv = document.createElement("div");
+            baseDiv.setAttribute('onclick',"location.href='https://github.com/mcrrobinson/" + title + "'");
+            baseDiv.classList.add("grid");
+            baseDiv.style.height=getRandomBetween(220, 280) + 'px';
+
+            divElement("div", title, "gridTitle", baseDiv);
+            divElement("div", description, "gridDesc", baseDiv);
+            divElement("div", language, "gridLang", baseDiv);
+
+            // Write all contents to the grid.
+            document.getElementById(column).appendChild(baseDiv);
+        }
+
+        // request options
+        const options = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        // send post request
+        fetch('https://api.github.com/users/mcrrobinson/repos', options)
+            .then(res => res.json())
+            .then(res => {
+                for(i=0; i < res.length; i++){
+                    generateBlock(
+                        "column"+(i%4).toString(),
+                        res[i].name.replaceAll('-',' ').replaceAll('_',' '),
+                        res[i].description,
+                        res[i].language
+                    );
+                }
+            })
+            .catch(err => console.error(err));
+    </script>
 </html>
+

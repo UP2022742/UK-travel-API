@@ -106,15 +106,15 @@ func (route *Router) AboutPage(w http.ResponseWriter, r *http.Request) {
 
 // TablesPage contains the template event page.
 func (route *Router) ProjectsPage(w http.ResponseWriter, r *http.Request) {
-	type MetaTables struct {
-	}
+	type MetaProject struct{}
+
 	templates, err := template.ParseFiles(
 		"templates/project.html",
 	)
 	if err != nil {
 		route.logger.Error("Unable to parse 'Projects' page.", "err", err)
 	}
-	templates.ExecuteTemplate(w, "project.html", MetaTables{})
+	templates.ExecuteTemplate(w, "project.html", MetaProject{})
 	route.logger.Debug("A 'Projects' page request was made.")
 }
 
