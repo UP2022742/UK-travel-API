@@ -7,31 +7,14 @@ import (
 	"text/template"
 )
 
-func GetGreenList() ([]string, error) {
-	resp, err := http.Get("http://api:8080/green")
-	if err != nil {
-		return nil, err
-	}
-
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-
-	err = resp.Body.Close()
-	if err != nil {
-		return nil, err
-	}
-
-	var post []string
-	err = json.Unmarshal(body, &post)
-	if err != nil {
-		return nil, err
-	}
-	return post, nil
+type Countries struct {
+	Red   []string `json:"Red"`
+	Amber []string `json:"Amber"`
+	Green []string `json:"Green"`
 }
-func GetAmberList() ([]string, error) {
-	resp, err := http.Get("http://api:8080/amber")
+
+func GetAllLists() (*Countries, error) {
+	resp, err := http.Get("http://api:8080/all")
 	if err != nil {
 		return nil, err
 	}
@@ -46,35 +29,12 @@ func GetAmberList() ([]string, error) {
 		return nil, err
 	}
 
-	var post []string
+	var post Countries
 	err = json.Unmarshal(body, &post)
 	if err != nil {
 		return nil, err
 	}
-	return post, nil
-}
-func GetRedList() ([]string, error) {
-	resp, err := http.Get("http://api:8080/red")
-	if err != nil {
-		return nil, err
-	}
-
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-
-	err = resp.Body.Close()
-	if err != nil {
-		return nil, err
-	}
-
-	var post []string
-	err = json.Unmarshal(body, &post)
-	if err != nil {
-		return nil, err
-	}
-	return post, nil
+	return &post, nil
 }
 
 // HomePage contains the index.
@@ -134,11 +94,6 @@ func (route *Router) SocialPage(w http.ResponseWriter, r *http.Request) {
 
 // TypographyPage contains the template event page.
 func (route *Router) TravelPage(w http.ResponseWriter, r *http.Request) {
-	type MetaTravel struct {
-		GreenListCountries []string
-		AmberListCountries []string
-		RedListCountries   []string
-	}
 	templates, err := template.ParseFiles(
 		"templates/travel.html",
 	)
@@ -146,25 +101,13 @@ func (route *Router) TravelPage(w http.ResponseWriter, r *http.Request) {
 		route.logger.Error("Unable to parse 'Travel' page.", "err", err)
 	}
 
-	greenList, err := GetGreenList()
+	countries, err := GetAllLists()
 	if err != nil {
 		route.logger.Error("Unable to get 'Green' list.", "err", err)
 	}
-	amberList, err := GetAmberList()
-	if err != nil {
-		route.logger.Error("Unable to get 'Amber' list.", "err", err)
-	}
-	redList, err := GetRedList()
-	if err != nil {
-		route.logger.Error("Unable to get 'Red' list.", "err", err)
-	}
 
 	templates.ExecuteTemplate(
-		w, "travel.html", MetaTravel{
-			GreenListCountries: greenList,
-			AmberListCountries: amberList,
-			RedListCountries:   redList,
-		},
+		w, "travel.html", Countries{countries.Red, countries.Amber, countries.Green},
 	)
 	route.logger.Debug("A 'Travel' page request was made.")
 }

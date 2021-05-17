@@ -15,6 +15,7 @@ func (route *Worker) CreateAPIServer() {
 	r.HandleFunc("/green", route.GreenList).Methods("GET")
 	r.HandleFunc("/amber", route.AmberList).Methods("GET")
 	r.HandleFunc("/red", route.RedList).Methods("GET")
+	r.HandleFunc("/all", route.AllLists).Methods("GET")
 
 	route.apiServer = &http.Server{
 		Addr:    fmt.Sprintf(":%d", route.apiPort),
